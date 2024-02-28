@@ -18,7 +18,7 @@
   ],
   "require": {
     "forwarder/belco-magento2": "^0.4",
-    "hyva-themes/magento2-default-theme": "^0.4"
+    "hyva-themes/magento2-default-theme": "*"
   },
   "autoload": {
     "files": [
