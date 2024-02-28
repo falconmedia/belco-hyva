@@ -1,0 +1,31 @@
+{
+  "name": "falconmedia/magento2-belco-hyva",
+  "description": "Belco.io Magento Module compatible with Hyvä Themes to install widget code and sync customer information.",
+  "license": "GPL-3.0",
+  "type": "magento2-module",
+  "version": "0.4",
+  "authors": [
+    {
+      "name":"Henk Valk",
+      "email":"henk@falconmedia.nl",
+      "homepage": "https://www.falconmedia.nl"
+    },
+    {
+      "name":"Ruud van Zuidam",
+      "email":"allrude@gmail.com",
+      "homepage": "https://www.siteation.nl"
+    }
+  ],
+  "require": {
+    "forwarder/belco-magento2": "^0.4",
+    "hyva-themes/magento2-default-theme": "^0.4"
+  },
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "Belco\\Hyva\\": ""
+    }
+  }
+}
