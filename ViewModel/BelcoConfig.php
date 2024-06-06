@@ -67,7 +67,7 @@ class BelcoConfig implements ArgumentInterface
             $customer = $this->customerCustomerFactory->create()->load($this->customerSession->getCustomer()->getId());
 
             if ($secret) {
-                $config['hash'] = hash_hmac("sha256", $customer, $secret);
+                $config['hash'] = hash_hmac("sha256", $customer->getId() ?? '', $secret ?? '');
             }
 
             $config = array_merge($config, $this->belcoCustomer->factory($customer));
