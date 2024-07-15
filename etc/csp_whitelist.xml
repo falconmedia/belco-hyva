@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author      Henk Valk (henk@falconmedia.nl)
+ * @package     Belco_Hyva
+ * @since       version 0.4.5
+ * Copyrights  2024 Falcon Media. All rights reserved.
+ * https://www.falconmedia.nl
+ */
+-->
+<csp_whitelist
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Csp:etc/csp_whitelist.xsd"
+>
+    <policies>
+        <policy id="script-src">
+            <values>
+                <value id="belco.io" type="host">*.belco.io</value>
+            </values>
+        </policy>
+        <policy id="connect-src">
+            <values>
+                <value id="belco.io" type="host">*.belco.io</value>
+            </values>
+        </policy>
+    </policies>
+</csp_whitelist>
