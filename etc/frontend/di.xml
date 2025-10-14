@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @package     Belco_Hyva
+ * @since       version 0.4.7
+ * Copyrights 2025 Falcon Media. All rights reserved.
+ * https://www.falconmedia.nl
+ */
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:App/etc/di.xsd">
+    <type name="Magento\Framework\App\Router\Base">
+        <arguments>
+            <argument name="routes" xsi:type="array">
+                <item name="belco" xsi:type="array">
+                    <item name="frontName" xsi:type="string">belco</item>
+                    <item name="module" xsi:type="string">Belco_Hyva</item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+</config>
