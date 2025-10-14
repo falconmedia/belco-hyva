@@ -1,11 +1,9 @@
 <?xml version="1.0"?>
 <!--
 /**
- * @author      Henk Valk (henk@falconmedia.nl)
- * @author      Ruud van Zuidam (allrude@gmail.com)
  * @package     Belco_Hyva
  * @since       version 0.4
- * Copyrights  2024 Falcon Media. All rights reserved.
+ * Copyrights 2024 Falcon Media. All rights reserved.
  * https://www.falconmedia.nl
  */
 -->
@@ -13,7 +11,9 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd"
 >
-    <module name="Belco_Hyva" setup_version="0.4.6">
+    <module name="Belco_Hyva"
+            setup_version="0.4.6"
+    >
         <sequence>
             <module name="Hyva_Theme"/>
             <module name="Belco_Widget"/>

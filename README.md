@@ -14,6 +14,7 @@ php bin/magento setup:upgrade
 
 For support about Belco, please contact Belco 
 
-Builded for Hyvä by:
-- Ruud van Zuidam
-- Henk Valk
+Contributors
+- @henkvalk
+- @allrude
+- @etalesramon 

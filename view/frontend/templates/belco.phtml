@@ -1,11 +1,9 @@
 <?php declare(strict_types=1);
-
 /**
- * @author      Henk Valk (henk@falconmedia.nl)
- * @author      Ruud van Zuidam (allrude@gmail.com)
  * @package     Belco_Hyva
  * @since       version 0.4.1
- * @copyright   2024 Falcon Media. All rights reserved.
+ * @update      version 0.4.7
+ * @copyright 2025 Falcon Media. All rights reserved.
  * https://www.falconmedia.nl
  */
 
@@ -24,9 +22,9 @@ $belcoConfig = $viewModels->require(BelcoConfig::class);
 ?>
 
 <script>
-    // Fetch belcoConfig dynamically to avoid caching sensitive data
     window.belcoConfig = null;
     function loadBelcoConfigAndWidget() {
+        // Fetch belcoConfig dynamically to avoid caching sensitive data
         fetch('/belco/config', { credentials: 'same-origin' })
             .then(function(response) { return response.json(); })
             .then(function(config) {
@@ -53,5 +51,6 @@ $belcoConfig = $viewModels->require(BelcoConfig::class);
                 })(document,"script");
             });
     }
+    // Load after User interaction
     window.addEventListener('init-external-scripts', loadBelcoConfigAndWidget, {once: true, passive: true});
 </script>

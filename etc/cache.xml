@@ -1,9 +1,16 @@
 <?xml version="1.0"?>
-<!-- Exclude Belco config endpoint from FPC and Varnish -->
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:App/etc/cache_types.xsd">
-    <type name="full_page">
-        <excludes>
-            <exclude path="/belco/config" />
-        </excludes>
+<!--
+/**
+ * @package     Belco_Hyva
+ * @since       version 0.4.7
+ * Copyrights 2025 Falcon Media. All rights reserved.
+ * https://www.falconmedia.nl
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:App/etc/cache_types.xsd">
+    <type name="full_page" instance="Magento\PageCache\Model\Cache\Type">
+        <label>Full Page Cache</label>
+        <description>Belco Hyvä: /belco/config is delivered by a non-cacheable controller.</description>
     </type>
 </config>

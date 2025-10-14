@@ -1,5 +1,12 @@
 <?xml version="1.0"?>
-<!-- Exclude Belco config endpoint from customer section cache -->
+<!--
+/**
+ * @package     Belco_Hyva
+ * @since       version 0.4.7
+ * Copyrights 2024 Falcon Media. All rights reserved.
+ * https://www.falconmedia.nl
+ */
+ -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:App/etc/sections.xsd">
     <section name="belco_config">
         <action name="*" type="no_cache" />
