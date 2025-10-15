@@ -7,8 +7,15 @@
  * https://www.falconmedia.nl
  */
  -->
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:App/etc/sections.xsd">
-    <section name="belco_config">
-        <action name="*" type="no_cache" />
-    </section>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Customer:etc/sections.xsd">
+    <action name="stores/store/switch">
+        <section name="*"/>
+    </action>
+    <action name="stores/store/switchRequest">
+        <section name="*"/>
+    </action>
+    <action name="directory/currency/switch">
+        <section name="*"/>
+    </action>
 </config>
