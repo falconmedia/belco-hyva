@@ -20,28 +20,16 @@ use Psr\Log\LoggerInterface;
  */
 class Index implements HttpGetActionInterface, NotCacheableInterface
 {
-    /** @var ResultFactory */
-    private $resultFactory;
-
-    /** @var LoggerInterface */
-    private $logger;
-
-    /** @var BelcoConfig */
-    private $belcoConfig;
-
     /**
      * @param ResultFactory $resultFactory
      * @param LoggerInterface $logger
      * @param BelcoConfig $belcoConfig
      */
     public function __construct(
-        ResultFactory $resultFactory,
-        LoggerInterface $logger,
-        BelcoConfig $belcoConfig
+        private readonly ResultFactory $resultFactory,
+        private readonly LoggerInterface $logger,
+        private readonly BelcoConfig $belcoConfig
     ) {
-        $this->resultFactory = $resultFactory;
-        $this->logger = $logger;
-        $this->belcoConfig = $belcoConfig;
     }
 
     /**
