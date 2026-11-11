@@ -14,7 +14,8 @@
     }
   ],
   "require": {
-    "forwarder/belco-magento2": "*",
+    "php": "^7.2 || ^8.0",
+    "forwarder/belco-magento2": "^0.4.11",
     "hyva-themes/magento2-default-theme": "*"
   },
   "autoload": {
