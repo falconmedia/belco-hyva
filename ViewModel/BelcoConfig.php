@@ -17,17 +17,36 @@ use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\View\Element\Block\ArgumentInterface;
 use Magento\Store\Model\ScopeInterface;
 
+/**
+ * Builds the Belco widget config for the current customer and cart.
+ */
 class BelcoConfig implements ArgumentInterface
 {
+    /** @var ScopeConfigInterface */
     protected $scopeConfig;
+
+    /** @var BelcoCustomerFactory */
     protected $widgetBelcoCustomerFactory;
+
+    /** @var Session */
     protected $customerSession;
+
+    /** @var CustomerFactory */
     protected $customerCustomerFactory;
+
+    /** @var Cart */
     protected $checkoutCartHelper;
 
     /** @var BelcoCustomer */
     protected $belcoCustomer;
 
+    /**
+     * @param ScopeConfigInterface $scopeConfig
+     * @param Session $customerSession
+     * @param CustomerFactory $customerCustomerFactory
+     * @param Cart $checkoutCartHelper
+     * @param BelcoCustomerFactory $widgetBelcoCustomerFactory
+     */
     public function __construct(
         ScopeConfigInterface $scopeConfig,
         Session $customerSession,
@@ -42,29 +61,39 @@ class BelcoConfig implements ArgumentInterface
         $this->belcoCustomer = $widgetBelcoCustomerFactory->create();
     }
 
+    /**
+     * Returns the widget config.
+     *
+     * @return array
+     */
     public function getSectionData()
     {
         return $this->getConfig();
     }
 
+    /**
+     * Builds shop, customer and cart data for the widget.
+     *
+     * @return array
+     */
     protected function getConfig()
     {
         $settings = $this->scopeConfig->getValue('belco_settings/general', ScopeInterface::SCOPE_STORE);
 
         if (empty($settings['shop_id'])) {
-            return array();
+            return [];
         }
 
-        $secret = $settings['api_secret'];
-        $config = array(
+        $secret = $settings['api_secret'] ?? null;
+        $config = [
             'shopId' => $settings['shop_id']
-        );
+        ];
 
         if ($this->customerSession->isLoggedIn()) {
-            $customer = $this->customerCustomerFactory->create()->load($this->customerSession->getCustomer()->getId());
+            $customer = $this->customerSession->getCustomer();
 
             if ($secret) {
-                $config['hash'] = hash_hmac("sha256", $customer->getId() ?? '', $secret ?? '');
+                $config['hash'] = hash_hmac('sha256', (string) $customer->getId(), (string) $secret);
             }
 
             $config = array_merge($config, $this->belcoCustomer->factory($customer));
@@ -77,29 +106,36 @@ class BelcoConfig implements ArgumentInterface
         return $config;
     }
 
+    /**
+     * Returns the cart items and total, or null for an empty cart.
+     *
+     * @return array|null
+     */
     protected function getCart()
     {
         $cart = $this->checkoutCartHelper->getCart();
         $quote = $cart->getQuote();
         $items = $quote->getAllVisibleItems();
-        $config = array(
-            'items' => array(),
+        $config = [
+            'items' => [],
             'total' => $quote->getGrandTotal()
-        );
+        ];
 
         foreach ($items as $item) {
             $product = $item->getProduct();
-            $config['items'][] = array(
+            $config['items'][] = [
                 'id' => $product->getId(),
                 'quantity' => $item->getQty(),
                 'name' => $item->getName(),
                 'price' => $item->getPrice(),
                 'url' => $product->getProductUrl()
-            );
+            ];
         }
 
         if (count($config['items'])) {
             return $config;
         }
+
+        return null;
     }
 }

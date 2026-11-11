@@ -22,5 +22,10 @@
                 <value id="belco.io" type="host">*.belco.io</value>
             </values>
         </policy>
+        <policy id="media-src">
+            <values>
+                <value id="belco.io" type="host">*.belco.io</value>
+            </values>
+        </policy>
     </policies>
 </csp_whitelist>

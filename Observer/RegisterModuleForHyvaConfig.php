@@ -12,15 +12,28 @@ use Magento\Framework\Component\ComponentRegistrar;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 
+/**
+ * Adds this module to the Hyva Tailwind build config.
+ */
 class RegisterModuleForHyvaConfig implements ObserverInterface
 {
+    /** @var ComponentRegistrar */
     private ComponentRegistrar $componentRegistrar;
 
+    /**
+     * @param ComponentRegistrar $componentRegistrar
+     */
     public function __construct(ComponentRegistrar $componentRegistrar)
     {
         $this->componentRegistrar = $componentRegistrar;
     }
 
+    /**
+     * Appends the module path to the Hyva config extensions.
+     *
+     * @param Observer $event
+     * @return void
+     */
     public function execute(Observer $event)
     {
         $config = $event->getData('config');
