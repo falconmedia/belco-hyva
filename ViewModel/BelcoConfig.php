@@ -11,6 +11,7 @@ namespace Belco\Hyva\ViewModel;
 use Belco\Widget\Model\BelcoCustomer;
 use Belco\Widget\Model\BelcoCustomerFactory;
 use Magento\Checkout\Helper\Cart;
+use Magento\Customer\Model\CustomerFactory;
 use Magento\Customer\Model\Session;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\View\Element\Block\ArgumentInterface;
@@ -30,6 +31,9 @@ class BelcoConfig implements ArgumentInterface
     /** @var Session */
     protected $customerSession;
 
+    /** @var CustomerFactory */
+    protected $customerCustomerFactory;
+
     /** @var Cart */
     protected $checkoutCartHelper;
 
@@ -39,17 +43,20 @@ class BelcoConfig implements ArgumentInterface
     /**
      * @param ScopeConfigInterface $scopeConfig
      * @param Session $customerSession
+     * @param CustomerFactory $customerCustomerFactory
      * @param Cart $checkoutCartHelper
      * @param BelcoCustomerFactory $widgetBelcoCustomerFactory
      */
     public function __construct(
         ScopeConfigInterface $scopeConfig,
         Session $customerSession,
+        CustomerFactory $customerCustomerFactory,
         Cart $checkoutCartHelper,
         BelcoCustomerFactory $widgetBelcoCustomerFactory
     ) {
         $this->scopeConfig = $scopeConfig;
         $this->customerSession = $customerSession;
+        $this->customerCustomerFactory = $customerCustomerFactory;
         $this->checkoutCartHelper = $checkoutCartHelper;
         $this->belcoCustomer = $widgetBelcoCustomerFactory->create();
     }

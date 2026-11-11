@@ -33,7 +33,7 @@ class Index implements HttpGetActionInterface, NotCacheableInterface
     }
 
     /**
-     * Returns the customer-specific widget config; never cached by FPC or Varnish.
+     * Returns the customer-specific widget config; the private, no-store headers keep it out of FPC and Varnish.
      *
      * @return JsonResult
      */
@@ -51,7 +51,7 @@ class Index implements HttpGetActionInterface, NotCacheableInterface
         $result = $this->resultFactory->create(ResultFactory::TYPE_JSON);
         $result->setHeader('Cache-Control', 'private, no-store, no-cache, must-revalidate, max-age=0', true);
         $result->setHeader('Pragma', 'no-cache', true);
-        $result->setHeader('Expires', '0', true);
+        $result->setHeader('Expires', 'Thu, 01 Jan 1970 00:00:00 GMT', true);
         $result->setData($data);
 
         return $result;
