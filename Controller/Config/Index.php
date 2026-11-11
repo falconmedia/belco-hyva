@@ -8,42 +8,39 @@
 
 namespace Belco\Hyva\Controller\Config;
 
-use Magento\Framework\App\Action\Action;
+use Belco\Hyva\ViewModel\BelcoConfig;
 use Magento\Framework\App\Action\HttpGetActionInterface;
 use Magento\Framework\App\PageCache\NotCacheableInterface;
 use Magento\Framework\Controller\Result\Json as JsonResult;
 use Magento\Framework\Controller\ResultFactory;
-use Magento\Framework\App\Response\Http as HttpResponse;
-use Magento\Framework\App\Action\Context;
 use Psr\Log\LoggerInterface;
-use Belco\Hyva\ViewModel\BelcoConfig;
-use Hyva\Theme\Model\ViewModelRegistry;
 
+/**
+ * Uncached JSON endpoint with the Belco widget config.
+ */
 class Index implements HttpGetActionInterface, NotCacheableInterface
 {
-
+    /**
+     * @param ResultFactory $resultFactory
+     * @param LoggerInterface $logger
+     * @param BelcoConfig $belcoConfig
+     */
     public function __construct(
-        private readonly Context $context,
         private readonly ResultFactory $resultFactory,
-        private readonly HttpResponse $response,
         private readonly LoggerInterface $logger,
-        private readonly ViewModelRegistry $viewModelRegistry
+        private readonly BelcoConfig $belcoConfig
     ) {
     }
 
     /**
+     * Returns the customer-specific widget config; never cached by FPC or Varnish.
+     *
      * @return JsonResult
      */
     public function execute(): JsonResult
     {
-        $this->response->setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0', true);
-        $this->response->setHeader('Pragma', 'no-cache', true);
-        $this->response->setHeader('Expires', '0', true);
-
         try {
-            $belcoConfig = $this->viewModelRegistry->require(BelcoConfig::class);
-            $data = $belcoConfig->getSectionData();
-
+            $data = $this->belcoConfig->getSectionData();
         } catch (\Throwable $e) {
             // Never leak sensitive details
             $this->logger->error('[BelcoHyva] Config endpoint error: ' . $e->getMessage());
@@ -52,7 +49,11 @@ class Index implements HttpGetActionInterface, NotCacheableInterface
 
         /** @var JsonResult $result */
         $result = $this->resultFactory->create(ResultFactory::TYPE_JSON);
+        $result->setHeader('Cache-Control', 'private, no-store, no-cache, must-revalidate, max-age=0', true);
+        $result->setHeader('Pragma', 'no-cache', true);
+        $result->setHeader('Expires', '0', true);
         $result->setData($data);
+
         return $result;
     }
 }

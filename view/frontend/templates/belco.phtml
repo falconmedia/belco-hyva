@@ -7,17 +7,13 @@
  * https://www.falconmedia.nl
  */
 
-use Belco\Hyva\ViewModel\BelcoConfig;
-use Hyva\Theme\Model\ViewModelRegistry;
+use Hyva\Theme\ViewModel\HyvaCsp;
 use Magento\Framework\Escaper;
 use Magento\Framework\View\Element\Template;
 
-/** @var ViewModelRegistry $viewModels */
 /** @var Escaper $escaper */
 /** @var Template $block */
-
-/** @var BelcoConfig $belcoConfig */
-$belcoConfig = $viewModels->require(BelcoConfig::class);
+/** @var HyvaCsp|null $hyvaCsp */
 
 ?>
 
@@ -25,9 +21,12 @@ $belcoConfig = $viewModels->require(BelcoConfig::class);
     window.belcoConfig = null;
     function loadBelcoConfigAndWidget() {
         // Fetch belcoConfig dynamically to avoid caching sensitive data
-        fetch('/belco/config', { credentials: 'same-origin' })
+        fetch('<?= $escaper->escapeJs($block->getUrl('belco/config')) ?>', { credentials: 'same-origin' })
             .then(function(response) { return response.json(); })
             .then(function(config) {
+                if (!config || !config.shopId) {
+                    return;
+                }
                 window.belcoConfig = config;
                 // Load Belco widget after config is set
                 (function(n,o){
@@ -40,7 +39,6 @@ $belcoConfig = $viewModels->require(BelcoConfig::class);
                             var i=n.createElement(o);
                             i.async=!0;
                             i.id="belco-js";
-                            i.type="text/javascript";
                             i.src="//cdn.belco.io/v2/widget.js";
                             i.onload=function(n){"function"==typeof e&&e(n)};
                             var t=n.getElementsByTagName(o)[0];
@@ -54,3 +52,4 @@ $belcoConfig = $viewModels->require(BelcoConfig::class);
     // Load after User interaction
     window.addEventListener('init-external-scripts', loadBelcoConfigAndWidget, {once: true, passive: true});
 </script>
+<?php isset($hyvaCsp) && $hyvaCsp->registerInlineScript() ?>
