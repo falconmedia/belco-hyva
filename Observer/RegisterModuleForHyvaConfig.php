@@ -18,7 +18,7 @@ use Magento\Framework\Event\ObserverInterface;
 class RegisterModuleForHyvaConfig implements ObserverInterface
 {
     /** @var ComponentRegistrar */
-    private ComponentRegistrar $componentRegistrar;
+    private $componentRegistrar;
 
     /**
      * @param ComponentRegistrar $componentRegistrar
